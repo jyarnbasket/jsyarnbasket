@@ -576,8 +576,6 @@ img, video {
   z-index: -1;
 }
 
-.spool-wrapper:contains(.whatsapp-spool) .spool-thread-line { color: #25D366; }
-.spool-wrapper:contains(.instagram-spool) .spool-thread-line { color: #dc2743; }
 
 /* When hovering, pull out a thread line out toward the left side */
 .spool-wrapper:hover .spool-thread-line {
