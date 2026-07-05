@@ -1,0 +1,663 @@
+:root {
+  --bg-deep-violet: #1E1035;  
+  --bg-card: #3D2665;        
+  --text-light: #FFF7E6;     
+  --text-muted: #BFAFCF;     
+  --primary-orange: #FF9F43; 
+  --accent-blue: #74b9ff;    
+  
+  --font-logo: 'Cinzel', serif;       
+  --font-whimsical: 'DynaPuff', cursive; 
+  --font-script: 'Great Vibes', cursive; 
+  --font-body: 'Lora', Garamond, serif; 
+}
+
+/* --- 1. GLOBAL MOBILE-FIRST RESETS --- */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px; /* Accounts for the floating mobile header */
+  box-sizing: border-box;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--bg-deep-violet);
+  color: var(--text-light);
+  font-family: var(--font-body);
+  font-size: 16px; /* Base scale */
+  line-height: 1.5;
+  overflow-x: hidden;
+  background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px);
+  background-size: 24px 24px; 
+}
+
+h1, h2, h3 {
+  font-family: var(--font-logo);
+  color: var(--text-light);
+  margin-top: 0;
+  font-weight: 700;
+}
+
+img, video {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* --- 2. RESPONSIVE CONTAINERS & SECTIONS --- */
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1rem; /* Scalable inner padding */
+}
+
+.page-section {
+  width: 100%;
+  min-height: calc(100vh - 70px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  padding: 1rem 0;
+}
+
+.main-scroller {
+  margin-top: 70px; /* Shifts content beneath fixed navbar */
+}
+
+/* --- 3. MOBILE-RESPONSIVE NAVIGATION PANEL --- */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 70px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1.25rem;
+  background: rgba(30, 16, 53, 0.95);
+  backdrop-filter: blur(8px);
+  border-bottom: 2px solid var(--bg-card);
+  z-index: 1000;
+}
+
+.brand-layout {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+.brand-layout h2 {
+  margin: 0;
+  font-size: 1.3rem; /* Scaled down for mobile safety */
+  letter-spacing: 0.5px;
+}
+
+/* Mobile Toggle Hamburger Button */
+.menu-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--text-light);
+  font-size: 1.75rem;
+  cursor: pointer;
+  display: block; /* Visible by default on mobile */
+  padding: 5px;
+}
+
+/* Nav Link Row - Default Hidden Mobile Overlay Sheet */
+.nav-links {
+  position: fixed;
+  top: 70px;
+  left: -100%; /* Hidden off-screen left */
+  width: 100%;
+  height: calc(100vh - 70px);
+  background: var(--bg-deep-violet);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 3rem;
+  gap: 2rem;
+  transition: left 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 999;
+}
+
+/* Active Class triggered by state */
+.nav-links.mobile-open {
+  left: 0;
+}
+
+.nav-links a {
+  font-family: var(--font-logo);
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: color 0.2s ease;
+}
+.nav-links a:hover {
+  color: var(--primary-orange);
+}
+
+/* --- 4. FLUID TYPOGRAPHY & ART COMPONENT SCALES --- */
+.immersive-hero {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.hero-logo-large {
+  width: 140px; /* Scaled down for compact phone screen boundaries */
+  height: 140px;
+  border-radius: 50%;
+  border: 4px solid var(--primary-orange);
+  box-shadow: 0 0 30px rgba(245, 147, 66, 0.3);
+  margin-bottom: 1.5rem;
+}
+
+.plush-badge {
+  font-family: var(--font-whimsical);
+  background: rgba(255, 159, 67, 0.15);
+  color: var(--primary-orange);
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  border: 1px dashed var(--primary-orange);
+  display: inline-block;
+  margin-bottom: 1rem;
+}
+
+.glow-title {
+  font-family: var(--font-logo);
+  font-size: 2.2rem; /* Mobile scaling fallback */
+  line-height: 1.1;
+  text-shadow: 0 0 15px rgba(255, 159, 67, 0.4);
+  margin-bottom: 0.5rem;
+}
+
+.script-sub {
+  font-family: var(--font-script);
+  font-size: 2rem;
+  color: var(--primary-orange);
+  margin-bottom: 1.5rem;
+}
+
+.hero-paragraph {
+  max-width: 550px;
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  font-style: italic;
+  padding: 0 0.5rem;
+}
+
+.btn-magical { 
+  display: inline-block;
+  background: linear-gradient(135deg, var(--primary-orange), #E67E22);
+  color: #1E1035; 
+  font-family: var(--font-logo);
+  font-weight: bold;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px; 
+  font-size: 1rem;
+  cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 4px 15px rgba(255, 159, 67, 0.3);
+  transition: transform 0.2s ease;
+}
+.btn-magical:hover {
+  transform: scale(1.03);
+}
+
+/* --- 5. RESPONSIVE GRIDS & FLEX SHOWCASES --- */
+.showcase-row {
+  display: flex;
+  flex-direction: column; /* Stack vertically on phones */
+  align-items: center;
+  gap: 2rem;
+  width: 100%;
+  margin-top: 3rem;
+}
+
+.polaroid-card {
+  background: #FFFDF9;
+  padding: 10px 10px 20px 10px;
+  border-radius: 4px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  width: 100%;
+  max-width: 240px; /* Controlled wide limit for crisp rendering */
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+.polaroid-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+.polaroid-text {
+  color: #2D1B4E;
+  font-size: 1rem;
+  margin-top: 8px;
+  font-weight: bold;
+}
+
+/* Fluid Auto-Grid System for Gallery, Blogs, etc. */
+.grid {
+  display: grid;
+  /* Automatically maps columns based on phone container width scales */
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.card {
+  background: var(--bg-card);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.card-body {
+  padding: 1.25rem;
+}
+
+/* --- 6. FLOATING SOCIAL PLACEMENTS --- */
+.floating-socials-holder {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 9999;
+}
+.social-float-btn {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  text-decoration: none;
+}
+.social-float-btn svg { width: 22px; height: 22px; }
+.whatsapp-color { background-color: #25D366; }
+.instagram-color { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #bc1888 100%); }
+
+.star-canopy {
+  position: absolute;
+  top: 0; left: 0; width: 100%; height: 100%;
+  overflow: hidden; z-index: -1; pointer-events: none;
+}
+.star {
+  position: absolute; background-color: #ffffff;
+  clip-path: polygon(50% 0%, 61% 35%, 100% 50%, 61% 65%, 50% 100%, 39% 65%, 0% 50%, 39% 35%);
+  animation: sparkleAnimation 5s infinite ease-in-out; opacity: 0;
+}
+@keyframes sparkleAnimation {
+  0%, 100% { opacity: 0.1; transform: scale(0.5); }
+  50% { opacity: 0.8; transform: scale(1); }
+}
+
+/* --- 7. TABLET & DESKTOP ENHANCEMENT MEDIA QUERIES --- */
+@media (min-width: 768px) {
+  body { font-size: 18px; }
+  .navbar { padding: 0 40px; }
+  .brand-layout h2 { font-size: 1.6rem; }
+  
+  /* Hide Mobile Menu Toggle trigger */
+  .menu-toggle-btn { display: none; }
+  
+  /* Convert Mobile Sidebar into horizontal top menu instantly */
+  .nav-links {
+    position: static;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    padding-top: 0;
+    background: none;
+    gap: 25px;
+  }
+  .nav-links a { font-size: 1.05rem; }
+
+  .hero-logo-large { width: 220px; height: 220px; }
+  .glow-title { font-size: 4rem; }
+  .script-sub { font-size: 3.2rem; }
+  .hero-paragraph { font-size: 1.25rem; }
+
+  /* Pivot polaroid row into horizontal display */
+  .showcase-row {
+    flex-direction: row;
+    justify-content: center;
+  }
+  .polaroid-card {
+    transform: rotate(var(--rotation));
+  }
+  .polaroid-card:hover {
+    transform: scale(1.1) rotate(0deg);
+    z-index: 10;
+  }
+}
+
+/* --- PREMIUM MODERN FORM CORE --- */
+.premium-contact-card {
+  max-width: 520px;
+  margin: 0 auto;
+  width: 100%;
+  background: linear-gradient(145deg, #2B184B, #1A0D30);
+  padding: 2.5rem 1.75rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 159, 67, 0.1);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* Group Wrapper targeting absolute shifts */
+.premium-form-group {
+  position: relative;
+  margin-bottom: 2rem;
+  width: 100%;
+}
+
+/* Custom Outlined Label Positioning */
+.premium-label {
+  position: absolute;
+  left: 45px;
+  top: 15px;
+  font-family: var(--font-logo);
+  font-size: 0.9rem;
+  font-weight: bold;
+  color: var(--text-muted);
+  pointer-events: none;
+  transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  z-index: 5;
+}
+
+/* Flex Wrapper alignment for icon + field */
+.input-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  background: #150926;
+  border: 2px solid #362254;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+  width: 100%;
+}
+
+.input-icon {
+  padding: 0 12px 0 16px;
+  font-size: 1.1rem;
+  opacity: 0.6;
+  transition: opacity 0.25s ease;
+}
+
+/* Raw Field Architecture Overhauls */
+.premium-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 15px 16px 15px 4px;
+  box-sizing: border-box;
+}
+
+.premium-textarea {
+  resize: none;
+}
+
+/* --- INTERACTIVE STATE MOTIONS --- */
+
+/* 1. Move label up and scale down gracefully on focus or field populated state */
+.premium-form-group.active .premium-label {
+  top: -12px;
+  left: 15px;
+  font-size: 0.75rem;
+  background: #23123d; /* Crops line bounds neatly */
+  padding: 2px 8px;
+  color: var(--primary-orange);
+  letter-spacing: 1px;
+  border-radius: 4px;
+  border: 1px solid rgba(255, 159, 67, 0.2);
+}
+
+/* 2. Glow outer wrapper frame on active focus */
+.premium-form-group.active .input-wrapper {
+  border-color: var(--primary-orange);
+  box-shadow: 0 0 12px rgba(255, 159, 67, 0.2), inset 0 0 6px rgba(0,0,0,0.6);
+  background: #0f051c;
+}
+
+.premium-form-group.active .input-icon {
+  opacity: 1;
+}
+
+/* 3. Fluid submit adaptation layout scale */
+.submit-btn-stretched {
+  width: 100%;
+  text-align: center;
+  padding: 15px;
+  font-size: 1.05rem;
+  margin-top: 5px;
+}
+
+/* --- THE YARN SPOOL SOCIAL DOCK --- */
+.whimsical-social-dock {
+  position: fixed;
+  bottom: 30px;
+  right: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  z-index: 9999;
+}
+
+/* Golden Knitting Needle Backbone Piercing Through */
+.dock-needle-backbone {
+  position: absolute;
+  top: -20px;
+  bottom: -10px;
+  width: 4px;
+  background: linear-gradient(to bottom, #ffeaa7, #bf9e3b);
+  border-radius: 2px;
+  z-index: 1;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.3);
+}
+
+/* Small knob at the very top of our needle */
+.dock-needle-backbone::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -4px;
+  width: 12px;
+  height: 12px;
+  background: #bf9e3b;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.4);
+}
+
+/* Spool Item Positioning Layout */
+.spool-wrapper {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Interactive Base Spool */
+.yarn-spool-btn {
+  position: relative;
+  width: 48px;
+  height: 52px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 6px; /* Soft cylindrical block */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Wooden Spool Rims (Top & Bottom borders) */
+.spool-rim {
+  position: absolute;
+  left: -3px;
+  right: -3px;
+  height: 6px;
+  background: #d2b48c; /* Soft natural birch wood shade */
+  border-radius: 3px;
+  border: 1px solid #b59975;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.2);
+}
+.spool-rim.top { top: 0; }
+.spool-rim.bottom { bottom: 0; }
+
+/* Spool Brand Variations (Textured Yarn Colors) */
+.whatsapp-spool {
+  background: radial-gradient(circle at center, #2be26f 0%, #1ebd5a 100%);
+  border-left: 2px dashed #169445; /* Simulates wrapped thread ridges */
+  border-right: 2px dashed #169445;
+}
+
+.instagram-spool {
+  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+  border-left: 2px dashed #910d65;
+  border-right: 2px dashed #910d65;
+}
+
+/* Floating Center Brand Icons */
+.spool-icon {
+  width: 22px;
+  height: 22px;
+  z-index: 3;
+  transition: transform 0.3s ease;
+}
+
+/* --- MICRO-INTERACTION HOVER EFFECTS --- */
+
+/* 1. Spool Rotation and Lift */
+.spool-wrapper:hover .yarn-spool-btn {
+  transform: translateY(-4px) rotate(15deg);
+  box-shadow: -5px 10px 18px rgba(0, 0, 0, 0.4);
+}
+
+.spool-wrapper:hover .spool-icon {
+  transform: scale(1.1);
+}
+
+/* 2. Loose Thread Pull Animation */
+.spool-thread-line {
+  position: absolute;
+  right: 24px;
+  bottom: 6px;
+  width: 0px;
+  height: 2px;
+  background: currentColor;
+  opacity: 0;
+  transition: all 0.35s ease;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.spool-wrapper:contains(.whatsapp-spool) .spool-thread-line { color: #25D366; }
+.spool-wrapper:contains(.instagram-spool) .spool-thread-line { color: #dc2743; }
+
+/* When hovering, pull out a thread line out toward the left side */
+.spool-wrapper:hover .spool-thread-line {
+  width: 40px;
+  right: 52px;
+  opacity: 0.7;
+  border-bottom: 1px dotted rgba(255,255,255,0.5); /* Loose thread behavior */
+}
+
+/* --- CELESTIAL MOON RADIANCE --- */
+.moon-glow-container {
+  position: relative;
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  padding: 20px;
+  /* Concentrated mystical radial backdrop behind the logo */
+  background: radial-gradient(circle, rgba(255, 247, 230, 0.15) 0%, rgba(255, 159, 67, 0.05) 45%, transparent 70%);
+  border-radius: 50%;
+}
+
+.celestial-radiance {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  border: 3px solid #FFF7E6 !important;
+  /* Multi-layered box shadow to create a deep, realistic moon glow */
+  box-shadow: 
+    0 0 20px rgba(255, 255, 255, 0.6), 
+    0 0 40px rgba(255, 247, 230, 0.4), 
+    0 0 70px var(--primary-orange),
+    inset 0 0 15px rgba(255, 255, 255, 0.5) !important;
+  animation: lunarPulse 4s ease-in-out infinite !important;
+  display: block;
+  z-index: 2;
+  position: relative;
+}
+
+/* Micro-Sparkles floating right outside the logo rim */
+.logo-sparkle {
+  position: absolute;
+  color: #FFF7E6;
+  font-size: 1.2rem;
+  text-shadow: 0 0 8px var(--primary-orange);
+  opacity: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.s1 { top: 15%; left: 10%; animation: starFloat 3.5s ease-in-out infinite; }
+.s2 { bottom: 20%; right: 5%; animation: starFloat 4.2s ease-in-out infinite 1s; }
+.s3 { top: 5%; right: 15%; animation: starFloat 3.8s ease-in-out infinite 2s; }
+
+/* --- ASTRONOMICAL ANIMATIONS --- */
+@keyframes lunarPulse {
+  0%, 100% {
+    transform: scale(1) translateY(0px);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.5), 0 0 40px rgba(255, 247, 230, 0.3), 0 0 60px rgba(255, 159, 67, 0.5);
+  }
+  50% {
+    transform: scale(1.03) translateY(-6px); /* Fluid hovering lift */
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.8), 0 0 55px rgba(255, 247, 230, 0.5), 0 0 90px rgba(255, 159, 67, 0.8);
+    border-color: var(--primary-orange) !important;
+  }
+}
+
+@keyframes starFloat {
+  0%, 100% { opacity: 0; transform: scale(0.5) translateY(0); }
+  50% { opacity: 0.9; transform: scale(1.1) translateY(-5px); }
+}
+
+/* Upscale limits for responsive desktop environments */
+@media (min-width: 768px) {
+  .celestial-radiance {
+    width: 220px;
+    height: 220px;
+  }
+  .moon-glow-container {
+    padding: 35px;
+  }
+  .logo-sparkle {
+    font-size: 1.6rem;
+  }
+}
