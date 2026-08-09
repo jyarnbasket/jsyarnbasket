@@ -659,3 +659,336 @@ img, video {
     font-size: 1.6rem;
   }
 }
+
+/* --- GALLERY SPECIFIC COMPONENTS --- */
+
+/* Filter Button Row */
+.gallery-filter-bar {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.gallery-filter-btn {
+  background: var(--bg-card);
+  color: var(--text-muted);
+  font-family: var(--font-logo);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 18px;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.gallery-filter-btn:hover {
+  color: var(--text-light);
+  border-color: var(--primary-orange);
+  transform: translateY(-2px);
+}
+
+.gallery-filter-btn.active {
+  background: linear-gradient(135deg, var(--primary-orange), #E67E22);
+  color: var(--bg-deep-violet);
+  border-color: transparent;
+  box-shadow: 0 4px 15px rgba(255, 159, 67, 0.35);
+}
+
+/* Interactive Gallery Card Extensions */
+.gallery-interactive-card {
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-interactive-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--primary-orange);
+  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.4), 0 0 15px rgba(255, 159, 67, 0.2);
+}
+
+.gallery-card-badge {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(30, 16, 53, 0.85);
+  color: var(--primary-orange);
+  font-family: var(--font-whimsical);
+  font-size: 0.65rem;
+  padding: 4px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 159, 67, 0.3);
+  z-index: 5;
+}
+
+.gallery-card-img-wrapper {
+  position: relative;
+  height: 220px;
+  width: 100%;
+  overflow: hidden;
+}
+
+.gallery-card-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.gallery-interactive-card:hover .gallery-card-img-wrapper img {
+  transform: scale(1.08);
+}
+
+.gallery-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(30, 16, 53, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: var(--text-light);
+  font-family: var(--font-logo);
+  font-weight: bold;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+.gallery-interactive-card:hover .gallery-hover-overlay {
+  opacity: 1;
+}
+
+.card-title-text {
+  font-size: 1.1rem;
+  margin: 0;
+  color: var(--text-light);
+}
+
+/* Lightbox Modal */
+.gallery-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 7, 28, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 10000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+}
+
+.gallery-modal-content {
+  position: relative;
+  max-width: 680px;
+  padding: 0;
+  overflow: hidden;
+  animation: modalPop 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.gallery-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  color: var(--text-light);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 10;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+}
+
+.gallery-modal-close:hover {
+  background: var(--primary-orange);
+  color: var(--bg-deep-violet);
+}
+
+.gallery-modal-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.gallery-modal-img-holder {
+  height: 260px;
+  width: 100%;
+}
+
+.gallery-modal-img-holder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gallery-modal-body {
+  padding: 1.75rem;
+}
+
+@keyframes modalPop {
+  from { opacity: 0; transform: scale(0.92); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@media (min-width: 650px) {
+  .gallery-modal-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .gallery-modal-img-holder {
+    height: 100%;
+    min-height: 320px;
+  }
+}
+
+/* --- PORTRAIT GALLERY CARD STYLES --- */
+
+.gallery-portrait-grid {
+  /* Fits 2 to 4 portrait cards dynamically depending on screen size */
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-portrait-wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4; /* Enforces a standard vertical portrait frame */
+  background: rgba(15, 7, 28, 0.4);
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.gallery-portrait-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Keeps full coverage; change to 'contain' if you prefer no cropping at all */
+  object-position: center;
+  transition: transform 0.4s ease;
+}
+
+.gallery-interactive-card:hover .gallery-portrait-wrapper img {
+  transform: scale(1.06);
+}
+
+.gallery-hover-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(30, 16, 53, 0.65);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: var(--text-light);
+  font-family: var(--font-logo);
+  font-weight: bold;
+  font-size: 0.95rem;
+  letter-spacing: 1px;
+}
+
+.gallery-interactive-card:hover .gallery-hover-overlay {
+  opacity: 1;
+}
+
+/* Modal Adjustments for Portrait View */
+.gallery-modal-img-holder {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  background: #0f051c;
+}
+
+.gallery-modal-img-holder img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain; /* Shows entire portrait photo in preview without clipping */
+}
+
+/* --- PORTRAIT POLAROID HERO CARDS --- */
+
+.showcase-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  flex-wrap: wrap;
+}
+
+.polaroid-card.portrait-polaroid {
+  background: #ffffff;
+  padding: 12px 12px 16px 12px;
+  border-radius: 8px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35), 0 2px 8px rgba(0, 0, 0, 0.2);
+  text-decoration: none;
+  transform: rotate(var(--rotation, 0deg));
+  transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.35s ease;
+  width: 190px; /* Slim, elegant card width */
+  display: flex;
+  flex-direction: column;
+}
+
+.polaroid-card.portrait-polaroid:hover {
+  transform: scale(1.08) rotate(0deg) translateY(-8px);
+  box-shadow: 0 18px 35px rgba(255, 159, 67, 0.25), 0 8px 20px rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+/* Enforces 3:4 portrait ratio for the photo area */
+.polaroid-img-frame {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 4px;
+  background: #0f051c;
+}
+
+.polaroid-img-frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.polaroid-card.portrait-polaroid:hover .polaroid-img-frame img {
+  transform: scale(1.06);
+}
+
+/* Polaroid bottom caption area */
+/* --- UNIFIED PROFESSIONAL POLAROID CAPTIONS --- */
+
+.polaroid-caption {
+  text-align: center;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Category tag matching site brand accents */
+.polaroid-tag {
+  font-family: var(--font-logo);
+  font-size: 0.65rem;
+  color: var(--primary-orange);
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+/* Title matching primary header typography (Cinzel) */
+.polaroid-text {
+  font-family: var(--font-logo);
+  font-size: 0.9rem;
+  color: #1a102f; /* Deep violet-black for high legibility */
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  line-height: 1.2;
+}

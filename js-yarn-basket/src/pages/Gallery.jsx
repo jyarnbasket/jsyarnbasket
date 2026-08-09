@@ -1,63 +1,133 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 
-export default function GallerySection() {
-  const [activeFilter, setActiveFilter] = useState('ALL');
+export default function Gallery() {
+  const [activeFilter, setActiveFilter] = useState('Recreations');
+  const [selectedItem, setSelectedItem] = useState(null);
 
-  const projects = [
-    { id: 1, category: 'WEARABLES', title: 'Autumn Cardigan', desc: '100% merino wool.', img: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=500&q=80' },
-    { id: 2, category: 'AMIGURUMI', title: 'Celestial Bunny', desc: 'Plush velvet yarn build.', img: 'https://images.unsplash.com/photo-1559251606-c623743a6d76?auto=format&fit=crop&w=500&q=80' },
-    { id: 3, category: 'BLANKETS', title: 'Starburst Afghan', desc: 'Intricate geometric join map.', img: 'https://images.unsplash.com/photo-1580301762395-21ce84d00bc6?auto=format&fit=crop&w=500&q=80' },
-    { id: 4, category: 'WEARABLES', title: 'Sage Cable Vest', desc: 'Classic cable-stitch structure.', img: 'https://images.unsplash.com/photo-1574169208507-84376144848b?auto=format&fit=crop&w=500&q=80' }
+  // Categories matching your exact folder names
+  const categories = [
+    'Recreations',
+    'Cartoon',
+    'Wearables',
+    'ALL'
   ];
 
-  const categories = ['ALL', 'WEARABLES', 'AMIGURUMI', 'BLANKETS'];
-  const filtered = activeFilter === 'ALL' ? projects : projects.filter(p => p.category === activeFilter);
+  // Dynamically import images from folder paths
+  const projects = useMemo(() => {
+    const globImports = import.meta.glob(
+      '../assets/gallery/**/*.{png,jpg,jpeg,webp,svg,JPG,JPEG,PNG}',
+      { eager: true }
+    );
+
+    let idCounter = 1;
+
+    return Object.keys(globImports).map((filePath) => {
+      const pathSegments = filePath.split('/');
+
+      // Target subfolder name (e.g. "Wearables")
+      const folderCategory = pathSegments[pathSegments.length - 2];
+
+      const imageSrc = globImports[filePath].default || globImports[filePath];
+
+      return {
+        id: idCounter++,
+        category: folderCategory,
+        img: imageSrc,
+      };
+    });
+  }, []);
+
+  // Filter projects based on active tab
+  const filteredProjects = activeFilter === 'ALL'
+    ? projects
+    : projects.filter(p => p.category === activeFilter);
 
   return (
-    <div style={{ width: '100%', padding: '2rem 0' }}>
-      <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+    <div style={{ width: '100%' }}>
+      {/* SECTION HEADER */}
+      <div style={{ textAlign: 'center', marginBottom: '2.5rem' }}>
         <div className="plush-badge">THE LOOKBOOK</div>
-        <h2 className="glow-title" style={{ fontSize: '2.2rem' }}>The Creation Chest</h2>
+        <h2 className="glow-title">The Creation Chest</h2>
+        <p className="script-sub">Stitched with love & magic</p>
+        <p className="hero-paragraph" style={{ margin: '0 auto' }}>
+          Tap any crafted piece to inspect the details or request a custom remake.
+        </p>
       </div>
 
-      {/* Flexible scrolling container for tags on extra-narrow viewports */}
-      <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginBottom: '2rem', flexWrap: 'wrap' }}>
+      {/* FILTER PILLS BAR */}
+      <div className="gallery-filter-bar">
         {categories.map((cat) => (
           <button
             key={cat}
             onClick={() => setActiveFilter(cat)}
-            style={{
-              background: activeFilter === cat ? 'linear-gradient(135deg, var(--primary-orange), #E67E22)' : 'var(--bg-card)',
-              color: activeFilter === cat ? '#1E1035' : 'var(--text-light)',
-              fontFamily: 'var(--font-logo)',
-              fontSize: '0.85rem',
-              fontWeight: 'bold',
-              border: 'none',
-              padding: '8px 18px',
-              borderRadius: '20px',
-              cursor: 'pointer',
-              transition: 'all 0.2s ease'
-            }}
+            className={`gallery-filter-btn ${activeFilter === cat ? 'active' : ''}`}
           >
             {cat}
           </button>
         ))}
       </div>
 
-      {/* Mobile-friendly automated column grid container */}
-      <div className="grid">
-        {filtered.map((item) => (
-          <div key={item.id} className="card">
-            <div style={{ height: '240px', overflow: 'hidden' }}>
-              <img src={item.img} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+      {/* GRID CONTAINER */}
+      <div className="grid gallery-portrait-grid">
+        {filteredProjects.length === 0 ? (
+          <div style={{ textAlign: 'center', gridColumn: '1 / -1', padding: '3rem 1rem' }}>
+            <p style={{ color: 'var(--text-muted)' }}>
+              No items found in this section folder yet.
+            </p>
+          </div>
+        ) : (
+          filteredProjects.map((item) => (
+            <div
+              key={item.id}
+              className="card gallery-interactive-card"
+              onClick={() => setSelectedItem(item)}
+            >
+              <div className="gallery-card-badge">{item.category}</div>
+
+              <div className="gallery-portrait-wrapper">
+                <img src={item.img} alt={item.category} loading="lazy" />
+                <div className="gallery-hover-overlay">
+                  <span>✦ View Details</span>
+                </div>
+              </div>
             </div>
-            <div className="card-body">
-              <h3 style={{ margin: '0 0 4px 0', fontSize: '1.2rem', fontFamily: 'var(--font-logo)' }}>{item.title}</h3>
-              <p style={{ margin: 0, fontSize: '0.9rem', color: 'var(--text-muted)' }}>{item.desc}</p>
+          ))
+        )}
+      </div>
+
+      {/* LIGHTBOX MODAL */}
+      {selectedItem && (
+        <div className="gallery-modal-backdrop" onClick={() => setSelectedItem(null)}>
+          <div className="premium-contact-card gallery-modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="gallery-modal-close" onClick={() => setSelectedItem(null)} aria-label="Close">
+              ✕
+            </button>
+
+            <div className="gallery-modal-grid">
+              <div className="gallery-modal-img-holder">
+                <img src={selectedItem.img} alt={selectedItem.category} />
+              </div>
+
+              <div className="gallery-modal-body">
+                <span className="plush-badge" style={{ fontSize: '0.75rem', marginBottom: '0.5rem' }}>
+                  {selectedItem.category}
+                </span>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', margin: '1rem 0 1.5rem 0' }}>
+                  Handcrafted item using premium yarn. Custom creations can be tailored in different colorways or sizes upon request!
+                </p>
+
+                <a
+                  href="#contact"
+                  className="btn-magical submit-btn-stretched"
+                  onClick={() => setSelectedItem(null)}
+                >
+                  REQUEST SOMETHING SIMILAR
+                </a>
+              </div>
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
