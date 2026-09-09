@@ -45,7 +45,7 @@ function App() {
           <a href="#gallery" onClick={closeMenu}>Gallery</a>
           <a href="#blog" onClick={closeMenu}>Blog</a>
           <a href="#about" onClick={closeMenu}>About</a>
-          <a href="#contact" onClick={closeMenu}>Contact</a>
+          {/* <a href="#contact" onClick={closeMenu}>Contact</a> */}
         </div>
       </nav>
 
@@ -79,11 +79,11 @@ function App() {
           </div>
         </section>
 
-        <section id="contact" className="page-section">
+        {/* <section id="contact" className="page-section">
           <div className="container">
             <ContactSection/>
           </div>
-        </section>
+        </section> */}
       </main>
 
       {/* Floating social connection points overlay */}

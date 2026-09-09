@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 
 export default function Gallery() {
+  const instagramUrl = "https://ig.me/m/js__yarn_basket/";
   const [activeFilter, setActiveFilter] = useState('Recreations');
   const [selectedItem, setSelectedItem] = useState(null);
 
@@ -117,7 +118,8 @@ export default function Gallery() {
                 </p>
 
                 <a
-                  href="#contact"
+                  href={instagramUrl} 
+                  target="_blank" 
                   className="btn-magical submit-btn-stretched"
                   onClick={() => setSelectedItem(null)}
                 >
